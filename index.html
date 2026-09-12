@@ -1,0 +1,262 @@
+import React, { useState } from 'react';
+import { Sparkles, ArrowRight, Check, Twitter, Youtube, Linkedin, Github, MessageSquare, Heart } from 'lucide-react';
+
+interface FooterProps {
+  onOpenSignIn: () => void;
+  onExploreCourses: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onOpenSignIn,
+  onExploreCourses,
+}) => {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !email.includes('@')) return;
+    setIsSubscribed(true);
+    setEmail('');
+    setTimeout(() => {
+      setIsSubscribed(false);
+    }, 4000);
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <footer
+      id="main-footer"
+      className="border-t border-slate-200 bg-white text-slate-600 text-sm"
+    >
+      {/* Top Newsletter & Callout Strip */}
+      <div className="border-b border-slate-100 bg-slate-50/70 py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-6 text-left">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 mb-2">
+                <Sparkles className="h-3 w-3" />
+                The EduSpark Learning Dispatch
+              </span>
+              <h3 className="font-display text-2xl font-bold text-slate-900">
+                Weekly study strategies & AI learning tips
+              </h3>
+              <p className="mt-1 text-sm text-slate-600">
+                Join 45,000+ students, teachers, and parents receiving our free weekend learning guides.
+              </p>
+            </div>
+
+            <div className="lg:col-span-6">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 max-w-md lg:ml-auto">
+                <input
+                  id="newsletter-email-input"
+                  type="email"
+                  placeholder="Enter your email address..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
+                <button
+                  id="newsletter-btn-subscribe"
+                  type="submit"
+                  className="flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-700 transition-all shrink-0"
+                >
+                  {isSubscribed ? (
+                    <>
+                      <Check className="h-4 w-4" />
+                      <span>Subscribed!</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Subscribe</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </>
+                  )}
+                </button>
+              </form>
+              {isSubscribed && (
+                <p className="mt-2 text-xs text-emerald-600 font-medium text-left lg:text-right">
+                  🎉 You’re subscribed! Check your inbox for the welcome study pack.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Links & Brand Section */}
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5 lg:gap-12">
+          
+          {/* Brand Col */}
+          <div className="col-span-2 text-left space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-teal-400 text-white shadow-sm">
+                <Sparkles className="h-4 w-4" />
+              </div>
+              <span className="font-display text-2xl font-bold tracking-tight text-slate-900">
+                Edu<span className="text-blue-600">Spark</span>
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 max-w-sm leading-relaxed">
+              Empowering students, educators, and families through interactive course sandboxes, 24/7 AI tutoring, and actionable progress tracking.
+            </p>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href="#twitter"
+                aria-label="Twitter / X"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-colors"
+              >
+                <Twitter className="h-4 w-4" />
+              </a>
+              <a
+                href="#youtube"
+                aria-label="YouTube"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:border-rose-300 hover:text-rose-600 transition-colors"
+              >
+                <Youtube className="h-4 w-4" />
+              </a>
+              <a
+                href="#linkedin"
+                aria-label="LinkedIn"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:border-blue-300 hover:text-blue-700 transition-colors"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a
+                href="#github"
+                aria-label="GitHub"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-900 transition-colors"
+              >
+                <Github className="h-4 w-4" />
+              </a>
+              <a
+                href="#discord"
+                aria-label="Discord Community"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+              >
+                <MessageSquare className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Col 1: Courses */}
+          <div className="text-left space-y-3">
+            <h4 className="font-display text-sm font-bold text-slate-900">Courses</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li>
+                <button onClick={() => scrollToSection('courses')} className="hover:text-blue-600 transition-colors">
+                  Python & Web Coding
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('courses')} className="hover:text-blue-600 transition-colors">
+                  Intuitive Calculus & Math
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('courses')} className="hover:text-blue-600 transition-colors">
+                  Astrophysics & Quantum
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('courses')} className="hover:text-blue-600 transition-colors">
+                  Persuasive Writing
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('courses')} className="hover:text-blue-600 transition-colors">
+                  UI/UX Product Design
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 2: Audiences */}
+          <div className="text-left space-y-3">
+            <h4 className="font-display text-sm font-bold text-slate-900">Platforms</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li>
+                <button onClick={() => scrollToSection('for-students')} className="hover:text-blue-600 transition-colors">
+                  For Students
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('for-educators')} className="hover:text-blue-600 transition-colors">
+                  For Educators
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('for-students')} className="hover:text-blue-600 transition-colors">
+                  For Parents & Families
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('resources')} className="hover:text-blue-600 transition-colors">
+                  Study Guides & Kits
+                </button>
+              </li>
+              <li>
+                <button onClick={onOpenSignIn} className="hover:text-blue-600 transition-colors">
+                  Sign In Portal
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Company & Trust */}
+          <div className="text-left space-y-3">
+            <h4 className="font-display text-sm font-bold text-slate-900">Trust & Legal</h4>
+            <ul className="space-y-2 text-xs text-slate-500">
+              <li>
+                <a href="#ferpa" className="hover:text-blue-600 transition-colors">
+                  FERPA & COPPA Privacy
+                </a>
+              </li>
+              <li>
+                <a href="#accessibility" className="hover:text-blue-600 transition-colors">
+                  Accessibility (WCAG 2.1)
+                </a>
+              </li>
+              <li>
+                <a href="#terms" className="hover:text-blue-600 transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#security" className="hover:text-blue-600 transition-colors">
+                  Safety & AI Ethics
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-blue-600 transition-colors">
+                  Support Desk
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Bottom copyright line */}
+        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>© {new Date().getFullYear()} EduSpark Inc. All rights reserved. Designed for smarter digital learning.</p>
+          <p className="flex items-center gap-1 text-slate-500">
+            <span>Built with care for learners worldwide</span>
+            <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500 inline" />
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
